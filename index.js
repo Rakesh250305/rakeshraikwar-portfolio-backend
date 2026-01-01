@@ -16,7 +16,31 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-app.use(cors());
+// Allowed frontend origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://rakesh-raikwar.vercel.app/" // production frontend
+];
+
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow REST tools & server-to-server calls
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -31,4 +55,4 @@ app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
 // app.listen(5000, () => console.log("Server running on port 5000"));
-app.exports();
+export default app;
