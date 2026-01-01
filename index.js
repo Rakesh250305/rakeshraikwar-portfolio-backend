@@ -43,9 +43,73 @@ app.use(
 
 app.use(express.json());
 
+// option 1
 app.get("/", (req, res) => {
-  res.send("Server is running...");
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Backend Running</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+          body {
+            background: #0f172a;
+            color: white;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .card {
+            background: #020617;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+          }
+          h1 {
+            color: #38bdf8;
+          }
+          a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+          }
+          a:hover {
+            background: #1d4ed8;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>🚀 Backend Server Running</h1>
+          <p>Rakesh Portfolio API is live</p>
+          <a href="${process.env.FRONTEND_URL}" target="_blank">
+            Go to Frontend
+          </a>
+        </div>
+      </body>
+    </html>
+  `);
 });
+
+
+// option 2
+// app.get("/", (req, res) => {
+//   res.send("Server is running...");
+// });
+
+//option 3
+// app.get("/", (req, res) => {
+//   res.redirect(process.env.FRONTEND_URL);
+// });
 
 app.use("/api/auth", authRoutes);
 app.use("/admin", adminRoutes);
