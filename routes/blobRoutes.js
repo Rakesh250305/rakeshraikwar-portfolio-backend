@@ -5,26 +5,24 @@ const router = express.Router();
 
 router.post("/upload", async (req, res) => {
   try {
-    const body = await req.body;
-
     const response = await handleUpload({
-      body,
       request: req,
-      onBeforeGenerateToken: async () => {
-        return {
-          allowedContentTypes: ["image/jpeg", "image/png", "image/webp"],
-          maximumSizeInBytes: 1024 * 1024 * 5,
-        };
-      },
+      body: req.body,
+
+      onBeforeGenerateToken: async () => ({
+        allowedContentTypes: ["image/jpeg", "image/png", "image/webp"],
+        maximumSizeInBytes: 5 * 1024 * 1024, // 5MB
+      }),
+
       onUploadCompleted: async ({ blob }) => {
-        console.log("Upload completed:", blob.url);
+        console.log("✅ Upload complete:", blob.url);
       },
     });
 
-    return res.json(response);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: error.message });
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
 
