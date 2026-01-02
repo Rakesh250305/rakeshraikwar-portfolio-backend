@@ -16,29 +16,18 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-const frontend = process.env.FRONTEND_URL;
-
 // Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
-  frontend // production frontend
+  process.env.FRONTEND_URL // production frontend
 ];
 
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow REST tools & server-to-server calls
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
@@ -93,7 +82,7 @@ app.get("/", (req, res) => {
         <div class="card">
           <h1>🚀 Backend Server Running</h1>
           <p>Rakesh Portfolio API is live</p>
-          <a href={frontend}>
+          <a href="https://rakesh-raikwar.vercel.app/">
             Go to Frontend
           </a>
         </div>
