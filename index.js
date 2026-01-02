@@ -13,6 +13,9 @@ import connectDB from "./config/dbconfig.js";
 dotenv.config();
 const app = express();
 
+// Connect to MongoDB
+connectDB();
+
 const allowedOrigins = [
   "https://rakesh-raikwar.vercel.app",
   "http://localhost:5173",
@@ -112,9 +115,9 @@ app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
 // Connect to MongoDB
-connectDB().then(()=>{
-  app.listen(PORT, () => 
-    console.log(`Server running on port ${PORT}`)
-);
-});
-// export default app;
+// connectDB().then(()=>{
+//   app.listen(PORT, () => 
+//     console.log(`Server running on port ${PORT}`)
+// );
+// });
+export default app;
