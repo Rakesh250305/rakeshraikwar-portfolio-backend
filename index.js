@@ -13,25 +13,20 @@ import connectDB from "./config/dbconfig.js";
 dotenv.config();
 const app = express();
 
+const FRONTEND_URL = "https://rakesh-raikwar.vercel.app";
+
 // Connect to MongoDB
 connectDB();
 
-// Allowed frontend origins
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://rakesh-raikwar.vercel.app",
-  process.env.FRONTEND_URL // production frontend
-];
-
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: [FRONTEND_URL, "http://localhost:5173"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
-app.options("*", cors());
+
 app.use(express.json());
 
 // option 1
@@ -109,5 +104,5 @@ app.use("/admin/experience", experienceRoutes);
 app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
-app.listen(5000, () => console.log("Server running on port 5000"));
-// export default app;
+// app.listen(5000, () => console.log("Server running on port 5000"));
+export default app;
