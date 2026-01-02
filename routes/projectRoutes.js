@@ -4,7 +4,6 @@ import {
   getProjects,
   createProject,
 } from "../controllers/projectController.js";
-import { upload } from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -12,6 +11,6 @@ const router = express.Router();
 router.get("/", getProjects);
 
 // ADMIN
-router.post("/create", adminAuth, upload.single("image"), createProject);
+router.post("/create", adminAuth, createProject);
 
 export default router;

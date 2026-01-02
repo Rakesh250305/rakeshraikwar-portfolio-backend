@@ -2,11 +2,12 @@ import express from "express";
 import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
-import adminRoutes from './routes/adminRoutes.js'
+import adminRoutes from './routes/adminRoutes.js';
+import blobRoutes from './routes/blobRoutes.js';
 import contactRoutes from "./routes/contactRoutes.js";
-import projectRoutes from './routes/projectRoutes.js'
-import experienceRoutes from './routes/experienceRoutes.js'
-import educationRoutes from './routes/educationRoutes.js'
+import projectRoutes from './routes/projectRoutes.js';
+import experienceRoutes from './routes/experienceRoutes.js';
+import educationRoutes from './routes/educationRoutes.js';
 import dotenv from "dotenv";
 import connectDB from "./config/dbconfig.js";
 
@@ -109,6 +110,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/admin", adminRoutes);
+app.use('/api/blob', blobRoutes);
 app.use("/admin/projects", projectRoutes);
 app.use("/admin/experience", experienceRoutes);
 app.use("/admin/education", educationRoutes);
