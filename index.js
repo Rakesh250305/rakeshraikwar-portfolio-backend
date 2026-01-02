@@ -91,7 +91,7 @@ app.get("/", (req, res) => {
         <div class="card">
           <h1>🚀 Backend Server Running</h1>
           <p>Rakesh Portfolio API is live</p>
-          <a href="${process.env.FRONTEND_URL}" target="_blank">
+          <a href="https://rakesh-raikwar.vercel.app/">
             Go to Frontend
           </a>
         </div>
@@ -118,5 +118,5 @@ app.use("/admin/experience", experienceRoutes);
 app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
-// app.listen(5000, () => console.log("Server running on port 5000"));
-export default app;
+app.listen(5000, () => console.log("Server running on port 5000"));
+// export default app;

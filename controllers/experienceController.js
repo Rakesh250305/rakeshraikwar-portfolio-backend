@@ -1,5 +1,5 @@
 import Experience from "../models/Experience.js";
-// import { put } from "@vercel/blob";
+import { put } from "@vercel/blob";
 
 export const getExperiences = async (req, res) => {
   try {
@@ -18,19 +18,19 @@ export const createExperience = async (req, res) => {
       duration,
       description,
       highlights,
-    //   imageBase64,
+      imageBase64,
     } = req.body;
 
-    // let imageUrl = "";
+    let imageUrl = "";
 
-    // if (imageBase64) {
-    //   const blob = await put(
-    //     `experience/${Date.now()}.png`,
-    //     Buffer.from(imageBase64, "base64"),
-    //     { access: "public" }
-    //   );
-    //   imageUrl = blob.url;
-    // }
+    if (imageBase64) {
+      const blob = await put(
+        `experience/${Date.now()}.png`,
+        Buffer.from(imageBase64, "base64"),
+        { access: "public" }
+      );
+      imageUrl = blob.url;
+    }
 
     const experience = await Experience.create({
       role,
@@ -38,7 +38,7 @@ export const createExperience = async (req, res) => {
       duration,
       description,
       highlights,
-    //   image: imageUrl,
+      image: imageUrl,
     });
 
     res.status(201).json({ success: true, result: experience });
