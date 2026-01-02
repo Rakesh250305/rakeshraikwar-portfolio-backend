@@ -113,7 +113,7 @@ app.use("/contact", contactRoutes);
 
 // Connect to MongoDB
 connectDB().then(()=>{
-  server.listen(PORT, () => 
+  app.listen(PORT, () => 
     console.log(`Server running on port ${PORT}`)
 );
 });
