@@ -16,10 +16,12 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+const frontend = process.env.FRONTEND_URL;
+
 // Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://rakesh-raikwar.vercel.app/" // production frontend
+  frontend // production frontend
 ];
 
 
@@ -91,7 +93,7 @@ app.get("/", (req, res) => {
         <div class="card">
           <h1>🚀 Backend Server Running</h1>
           <p>Rakesh Portfolio API is live</p>
-          <a href="https://rakesh-raikwar.vercel.app/">
+          <a href={frontend}>
             Go to Frontend
           </a>
         </div>
