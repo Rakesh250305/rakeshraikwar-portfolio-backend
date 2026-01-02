@@ -1,28 +1,35 @@
 import express from "express";
 import cors from "cors";
 
-import authRoutes from "../routes/authRoutes.js";
-import adminRoutes from '../routes/adminRoutes.js'
-import contactRoutes from "../routes/contactRoutes.js";
-import projectRoutes from '../routes/projectRoutes.js'
-import experienceRoutes from '../routes/experienceRoutes.js'
-import educationRoutes from '../routes/educationRoutes.js'
+import authRoutes from "./routes/authRoutes.js";
+import adminRoutes from './routes/adminRoutes.js'
+import contactRoutes from "./routes/contactRoutes.js";
+import projectRoutes from './routes/projectRoutes.js'
+import experienceRoutes from './routes/experienceRoutes.js'
+import educationRoutes from './routes/educationRoutes.js'
 import dotenv from "dotenv";
-import connectDB from "../config/dbconfig.js";
+import connectDB from "./config/dbconfig.js";
 
 dotenv.config();
 const app = express();
 
-const FRONTEND_URL = "https://rakesh-raikwar.vercel.app";
-
-// Connect to MongoDB
-connectDB();
+const allowedOrigins = [
+  "https://rakesh-raikwar.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use(
   cors({
-    origin: [FRONTEND_URL, "http://localhost:5173"],
+    origin: function (origin, callback){
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.includes(origin)){
+        callback(null, true);
+      } else{
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
@@ -104,5 +111,10 @@ app.use("/admin/experience", experienceRoutes);
 app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
-// app.listen(5000, () => console.log("Server running on port 5000"));
-export default app;
+// Connect to MongoDB
+connectDB().then(()=>{
+  server.listen(PORT, () => 
+    console.log(`Server running on port ${PORT}`)
+);
+});
+// export default app;
