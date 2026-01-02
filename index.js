@@ -107,6 +107,8 @@ app.get("/", (req, res) => {
 //   res.redirect(process.env.FRONTEND_URL);
 // });
 
+app.options("*", cors());
+
 app.use("/api/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/admin/projects", projectRoutes);

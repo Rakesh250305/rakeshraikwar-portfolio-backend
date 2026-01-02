@@ -6,7 +6,7 @@ import {
 } from "../controllers/projectController.js";
 
 const router = express.Router();
-import { uploadImage } from '../middleware/uploadImage.js'
+import uploadImage from '../middleware/uploadImage.js'
 
 // PUBLIC
 router.get("/", getProjects);
