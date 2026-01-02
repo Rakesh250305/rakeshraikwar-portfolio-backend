@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
 
-import authRoutes from "./routes/authRoutes.js";
-import adminRoutes from './routes/adminRoutes.js'
-import contactRoutes from "./routes/contactRoutes.js";
-import projectRoutes from './routes/projectRoutes.js'
-import experienceRoutes from './routes/experienceRoutes.js'
-import educationRoutes from './routes/educationRoutes.js'
+import authRoutes from "../routes/authRoutes.js";
+import adminRoutes from '../routes/adminRoutes.js'
+import contactRoutes from "../routes/contactRoutes.js";
+import projectRoutes from '../routes/projectRoutes.js'
+import experienceRoutes from '../routes/experienceRoutes.js'
+import educationRoutes from '../routes/educationRoutes.js'
 import dotenv from "dotenv";
-import connectDB from "./config/dbconfig.js";
+import connectDB from "../config/dbconfig.js";
 
 dotenv.config();
 const app = express();
