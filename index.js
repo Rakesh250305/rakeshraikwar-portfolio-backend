@@ -19,9 +19,9 @@ connectDB();
 // Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://rakesh-raikwar.vercel.app",
   process.env.FRONTEND_URL // production frontend
 ];
-
 
 app.use(
   cors({
@@ -31,7 +31,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
-
+app.options("*", cors());
 app.use(express.json());
 
 // option 1
