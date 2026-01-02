@@ -5,8 +5,12 @@ import {
   createProject,
 } from "../controllers/projectController.js";
 
-const router = express.Router();
 import uploadImage from '../middleware/uploadImage.js'
+const router = express.Router();
+
+router.options("/create", (req, res) => {
+  res.sendStatus(200);
+});
 
 // PUBLIC
 router.get("/", getProjects);
