@@ -10,6 +10,7 @@ export const getProjects = async (req, res) => {
   }
 };
 
+// create project
 export const createProject = async (req, res) => {
   try {
     console.log(req.body);
@@ -19,36 +20,32 @@ export const createProject = async (req, res) => {
       tech,
       githubUrl,
       liveUrl,
-      imageUrl,
     } = req.body;
 
-    if(!imageUrl){
-      return;
+    let imageUrl = null;
+    if (req.file){
+      const blob = await put(
+        `blob/${Date.now()}-${req.title}`,
+        req.file.buffer,
+        {access : "public" }
+      );
+      imageUrl = blob.url;
     }
-
-    // let imageUrl =null;
-    // if(req.file){
-    //   const blob = await put(
-    //     `project/${Date.now()}-${req.title}`,
-    //     req.file.buffer,
-    //     { access: "public" }
-    //   );
-    //   imageUrl = blob.url;
-    // }
-
-    // const tagsArray =
-    //   typeof tag === "string" ? JSON.parse(tag || "[]") : tag || [];
+    const techArray = typeof tech === "string" ? JSON.parse(tech || "[]") : tech || [];
 
     const project = await Project.create({
       title,
       description,
-      tech,
+      tech: techArray,
       githubUrl,
       liveUrl,
       image: imageUrl,
     });
-
-    res.status(201).json({ success: true, result: project });
+    res.status(200).json({
+      success: true,
+      message: "Project Created Success!",
+      result: project
+    });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
     console.log(err);
