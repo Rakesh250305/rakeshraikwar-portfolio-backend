@@ -18,30 +18,32 @@ export const createExperience = async (req, res) => {
       duration,
       description,
       highlights,
-      imageBase64,
     } = req.body;
 
-    let imageUrl = "";
-
-    if (imageBase64) {
-      const blob = await put(
-        `experience/${Date.now()}.png`,
-        Buffer.from(imageBase64, "base64"),
-        { access: "public" }
-      );
-      imageUrl = blob.url;
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "Image required" });
     }
+
+    const blob = await put(
+      `Experience/${Date.now()}-${req.company}`,
+      req.file.buffer,
+      { access: "public" }
+    );
+
+     const highlightsArray =
+      typeof highlights === "string" ? JSON.parse(highlights) : highlights || [];
+
 
     const experience = await Experience.create({
       role,
       company,
       duration,
       description,
-      highlights,
-      image: imageUrl,
+      highlights : highlightsArray,
+      image: blob.url,
     });
 
-    res.status(201).json({ success: true, result: experience });
+    res.status(201).json({ success: true,message:"Experience Created", result: experience });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

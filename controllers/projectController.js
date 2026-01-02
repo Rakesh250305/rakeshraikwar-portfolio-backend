@@ -20,7 +20,7 @@ export const createProject = async (req, res) => {
     }
 
     const blob = await put(
-      `projects/${Date.now()}-${req.file.originalname}`,
+      `projects/${Date.now()}-${req.title}`,
       req.file.buffer,
       { access: "public" }
     );

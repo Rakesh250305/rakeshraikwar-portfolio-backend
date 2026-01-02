@@ -105,10 +105,4 @@ app.use("/admin/experience", experienceRoutes);
 app.use("/admin/education", educationRoutes);
 app.use("/contact", contactRoutes);
 
-// Connect to MongoDB
-// connectDB().then(()=>{
-//   app.listen(PORT, () => 
-//     console.log(`Server running on port ${PORT}`)
-// );
-// });
 export default app;
